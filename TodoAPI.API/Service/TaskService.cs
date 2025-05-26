@@ -20,15 +20,23 @@ namespace TodoAPI.API.Service
             await _context.AddAsync(task);
             return task;
         }
-        public Task<TaskItem> UpdateAsync(TaskItem task)
+        public async Task<TaskItem> UpdateAsync(TaskItem task)
         {
-            _context.UpdateAsync(task);
-            return Task.FromResult(task);
+            var foundedTask = await GetByIdAsync(task.Id);
+            if (foundedTask != null)
+            {
+                _context.Update(task);
+                return task;
+            }
+            return task;
+
         }
-        public Task<TaskItem> DeleteAsync(int id)
+        public async Task<TaskItem> DeleteAsync(int id)
         {
-            _context.DeleteAsync(id);
-            return Task.FromResult(new TaskItem { Id = id });
+            var foundTask = await _context.GetByIdAsync(id);
+            if (foundTask == null) return null;
+            _context.Delete(foundTask);
+            return foundTask;
         }
     }
 }

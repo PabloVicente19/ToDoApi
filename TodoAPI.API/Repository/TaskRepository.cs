@@ -20,14 +20,17 @@ namespace TodoAPI.API.Repository
             await _context.TaskItems.AddAsync(task);
             await _context.SaveChangesAsync();
         }
-        public void UpdateAsync(TaskItem task)
+        public async Task Update(TaskItem task)
         {
-            _context.TaskItems.Attach(task);
-            _context.TaskItems.Entry(task).State = EntityState.Modified;
+            //_context.TaskItems.Attach(task);
+            //_context.TaskItems.Entry(task).State = EntityState.Modified;
+            _context.Update(task);
+            await Save();
         }
-        public void DeleteAsync(int id)
+        public async Task Delete(TaskItem taskItem)
         {
-            _context.TaskItems.Remove(_context.TaskItems.Find(id));
+            _context.TaskItems.Remove(taskItem);
+            await Save();
         }
         public async Task Save() => await _context.SaveChangesAsync();
     }
