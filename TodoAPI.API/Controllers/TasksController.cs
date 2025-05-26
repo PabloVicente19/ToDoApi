@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using TodoAPI.API.Context;
+﻿using Microsoft.AspNetCore.Mvc;
 using TodoAPI.API.Models;
 using TodoAPI.API.Service.Interfaces;
 
