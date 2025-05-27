@@ -12,8 +12,7 @@ namespace TodoAPI.API.Service
         public async Task<IEnumerable<TaskItem>> GetAllAsync() => await _context.GetAllAsync();
         public async Task<TaskItem> GetByIdAsync(int id)
         {
-            var taskItem = await _context.GetByIdAsync(id);
-            return taskItem;
+            return await _context.GetByIdAsync(id);
         }
         public async Task<TaskItem> CreateAsync(TaskItem task)
         {
@@ -22,20 +21,18 @@ namespace TodoAPI.API.Service
         }
         public async Task<TaskItem> UpdateAsync(TaskItem task)
         {
-            var foundedTask = await GetByIdAsync(task.Id);
-            if (foundedTask != null)
-            {
-                _context.Update(task);
-                return task;
-            }
+            var foundedTask = await _context.GetByIdAsync(task.Id);
+            
+            foundedTask.Description = task.Description;
+            _context.Update(task);
+            await _context.Save();
             return task;
-
         }
         public async Task<TaskItem> DeleteAsync(int id)
         {
             var foundTask = await _context.GetByIdAsync(id);
-            if (foundTask == null) return null;
             _context.Delete(foundTask);
+            await _context.Save();
             return foundTask;
         }
     }

@@ -12,25 +12,22 @@ namespace TodoAPI.API.Repository
         public async Task<IEnumerable<TaskItem>> GetAllAsync() => await _context.TaskItems.ToListAsync();
         public async Task<TaskItem> GetByIdAsync(int id)  
         {
-            var task = await _context.TaskItems.FindAsync(id);
-            return task ?? null;
+            var task = await _context.TaskItems.FirstOrDefaultAsync(t => t.Id == id);
+            return task;
         }
         public async Task AddAsync(TaskItem task)
         {
             await _context.TaskItems.AddAsync(task);
             await _context.SaveChangesAsync();
         }
-        public async Task Update(TaskItem task)
+        public void Update(TaskItem task)
         {
-            //_context.TaskItems.Attach(task);
-            //_context.TaskItems.Entry(task).State = EntityState.Modified;
-            _context.Update(task);
-            await Save();
+            _context.TaskItems.Attach(task);
+            _context.TaskItems.Entry(task).State = EntityState.Modified;
         }
-        public async Task Delete(TaskItem taskItem)
+        public void Delete(TaskItem taskItem)
         {
             _context.TaskItems.Remove(taskItem);
-            await Save();
         }
         public async Task Save() => await _context.SaveChangesAsync();
     }
