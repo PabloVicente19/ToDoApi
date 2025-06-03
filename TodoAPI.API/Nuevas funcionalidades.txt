@@ -1,0 +1,34 @@
+﻿1. Autenticación y Autorización
+•	JWT o Identity: Permite que solo usuarios autenticados puedan crear, modificar o eliminar tareas.
+•	Roles: Diferenciar entre usuarios normales y administradores.
+
+2. Gestión de usuarios
+•	Permitir el registro y login de usuarios.
+•	Asociar tareas a usuarios específicos.
+
+3. Campos adicionales en las tareas
+•	Fecha de vencimiento: Para saber cuándo debe completarse una tarea.
+•	Prioridad: Baja, media, alta.
+•	Estado: Pendiente, en progreso, completada, cancelada.
+•	Categoría o etiquetas: Para organizar mejor las tareas.
+
+4. Paginación y filtrado
+•	Permitir obtener tareas paginadas, por estado, por prioridad, por usuario, etc.
+
+5. Búsqueda
+•	Buscar tareas por descripción, estado, fecha, etc.
+
+6. Historial de cambios
+•	Registrar cuándo y quién modificó una tarea.
+
+7. Notificaciones
+•	Enviar notificaciones por email o push cuando una tarea está próxima a vencer o cambia de estado.
+
+8. Adjuntos
+•	Permitir subir archivos o imágenes asociados a una tarea.
+
+9. Auditoría y logs
+•	Registrar acciones importantes para trazabilidad y seguridad.
+
+10. Documentación interactiva
+•	Agregar Swagger/OpenAPI para que otros desarrolladores puedan probar y entender tu API fácilmente.

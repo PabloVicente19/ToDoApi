@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using TodoAPI.API.Models;
 using TodoAPI.API.Service.Interfaces;
 
@@ -13,7 +14,7 @@ namespace TodoAPI.API.Controllers
         {
             _service = service;
         }
-
+        [Authorize]
         [HttpGet]
         public async Task<IEnumerable<TaskItem>> GetAllAsync()
         {
@@ -40,21 +41,24 @@ namespace TodoAPI.API.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateAsync(int id, TaskItem task)
         {
-            if (id <= 0) return BadRequest("Id de la tarea invalido");
             if(!ModelState.IsValid) return BadRequest(ModelState);
 
             var foundedTask = await _service.GetByIdAsync(id);
+            if (foundedTask == null) return BadRequest("La tarea seleccionada no existe");
+
             foundedTask.Description = task.Description;
             await _service.UpdateAsync(foundedTask);
+
             return NoContent();
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAsync(int id)
         {
-            //if (id <= 0) return BadRequest("Id de la tarea invalido");
             var existingTask = await _service.GetByIdAsync(id);
+
             if (existingTask == null) return NotFound("La tarea Seleccionada no existe");
+            
             await _service.DeleteAsync(id);
             return NoContent();
         }
